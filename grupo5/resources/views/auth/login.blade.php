@@ -9,7 +9,7 @@
                         @csrf
 
                             <label for="username">{{ __('Username') }}</label>
-                            <input id="username" type="text" class="inputs" name="username" value="{{ old('username') }}" required autofocus>
+                            <input id="username" type="text" class="inputs" name="username" value="{{ old('username') }}" autofocus required>
                             @if ($errors->has('username'))
                             <strong>{{ $errors->first('username') }}</strong>
                             @endif

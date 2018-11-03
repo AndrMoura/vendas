@@ -21,11 +21,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/admin', 'AdminController@index')->middleware('admin');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth'], function () 
+{
 
     Route::get('/profile/{id}', 'UserProfileController@index');
     Route::get('/profile/{id}/edit', 'UserProfileController@edit');
-    Route::post('/profile/{id}/edit', 'UserProfileController@postEdit');
+    Route::post('/profile/{id}', 'UserProfileController@postEdit');
 
 });
+
+Route::get('password/reset/{token?}', 'Auth\ResetPasswordController@showResetFrom');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+
 

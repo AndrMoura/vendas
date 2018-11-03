@@ -10,8 +10,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <link href = "{{ asset('css/app.css') }}" rel ="stylesheet">
+    
 
 </head>
+<img src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/itCjTBE/bright-green-tech-abstract-animated-background-motion-world-map-graphic-design-clip-ultra-hd-4k-3840x2160_rhdbgsd1e_thumbnail-full04.png">
 <body>
         <div class="navbar">
         <nav>
@@ -52,6 +54,6 @@
         <main class="py-4">
             @yield('content')
         </main>
-    </div>
+    
 </body>
 </html>

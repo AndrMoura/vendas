@@ -1,29 +1,56 @@
 @extends('layouts.app')
 
 @section('content')
- <link href = "{{ asset('css/profile.css') }}" rel ="stylesheet">
+
+<link href = "{{ asset('css/main.css') }}" rel ="stylesheet">
+<link href = "{{ asset('css/profile.css') }}" rel ="stylesheet">
 
 
-    <body>
+<div class="displayprofile">
 
-    <div class="userinfo">
+            <h3 id="userprofileh3">User Profile</h3>
+            <div id="parent">
+            <strong> <label> Name:</label> </strong>
+            <p>{{$user->name}}</p>
+            </div>
 
-      <h3> {{$user->username}} profile </h3>
-        <ul>
-        <li>{{$user->name}} </li>
-        <li>{{$user->email}}</li>
-        </ul>
+            <div id="parent">
+            <strong> <label> Username:</label> </strong>
+            <p>{{$user->username}}</p>
+            </div>
 
+            <div id="parent">
+            <strong> <label> Email:</label> </strong>
+            <p>{{$user->email}}</p>
+            </div>
 
+            <div id="parent">
+            <strong> <label>Address:</label></strong>
+            <p>{{$user->address}}</p>
+            </div>
 
+            <div id="parent">
+            <strong> <label>City:</label></strong>
+            <p>{{$user->city}}</p>
+            </div>
+
+            <div id="parent">
+            <strong> <label>Codigo-Postal:</label></strong>
+            <p>{{$user->codigopostal}}</p>
+            </div>
+
+            <div id="parent">
+            <strong> <label>Phone-number:</label></strong>
+            <p>{{$user->phone}}</p>
+            </div>
     </div>
 
 
+    <a  href="/profile/{{Auth::user()->id}}/edit" class ="editsubmitprofile">Edit </a> 
 
-
-
-
-
-    </body>
-
+<br>
+<br>
+<br>
+         
+<hr>
 @endsection

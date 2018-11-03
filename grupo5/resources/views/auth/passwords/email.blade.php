@@ -10,7 +10,7 @@
                     {{ session('status') }}
                     @endif
 
-                    <form method="POST" action="{{ route('password.email') }}">
+                    <form method="POST" action="{{ url('password/email') }}">
                         @csrf
                     <label for="email" class="emailadressreturn">{{ __('E-Mail Address')}}</label>
                     <input id="email" type="email" class ="inputs" name="email" value="{{ old('email') }}" required>

@@ -17,15 +17,15 @@
                          <legend>Fill the form</legend>
                         <br>
                             <label for="name">{{ __('Name') }}</label>
-                            <input id="name" type="text"  name="name" class = "inputs" value="{{ old('name') }}" required autofocus>
-                            @if ($errors->has('name'))
+                            <input id="name" type="text"  name="name" class = "inputs" value="{{ old('name') }}" autofocus required>
+                             @if ($errors->has('name'))
                             <strong>{{ $errors->first('name') }}</strong>
                              @endif
                              <br>
 
 
                             <label for="username">{{ __('Username') }}</label>
-                            <input id="username" type="text"  name="username" class = "inputs" value="{{ old('username') }}" required autofocus>
+                            <input id="username" type="text"  name="username" class = "inputs" value="{{ old('username') }}" autofocus required>
                             @if ($errors->has('username'))
                             <strong>{{ $errors->first('username') }}</strong>
                             @endif
