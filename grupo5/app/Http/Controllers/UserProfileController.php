@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
 use App\User;
+use Illuminate\Session\SessionServiceProvider;
 
 class UserProfileController extends Controller
 {
@@ -22,18 +23,19 @@ class UserProfileController extends Controller
     }
 
     public function postEdit(Request $req, $id){
-        
+
         $this->validate($req, array(
-        'username' => 'required|min:5|max:255',
-        'email' => "required|email",
-        'address' => 'required|min:5|max:255',
-        'city' => 'required|min:5|max:255',
-        'codigopostal' => 'required|digits:7',
-        'phone' => 'required|digits:9'
+            'username' => 'nullable|min:5|max:255',
+            'email' => "nullable|email",
+            'address' => 'nullable|min:5|max:255',
+            'city' => 'nullable|min:5|max:255',
+            'codigopostal' => 'nullable|regex:/^\d{4}-\d{3}?$/',
+            'phone' => 'nullable|digits:9'
         ));
 
         $user = User::find($id);
         $user-> update($req->all());
+        session()->flash('msg', "Data saved with success!");
         return redirect('/profile/'.$user->id);
     }
 

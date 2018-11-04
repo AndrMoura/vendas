@@ -57,7 +57,7 @@
                             <button type="submit" class = "registercss">
                             {{ __('Register') }}
                             </button>
-                            
+                         </fieldset>
                     
                      </div>
 
