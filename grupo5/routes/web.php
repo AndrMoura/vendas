@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/admin', 'AdminController@index')->middleware('admin');
+//Route::get('/admin', 'AdminController@index')->middleware('admin');
 
 Route::group(['middleware' => 'auth'], function () 
 {
@@ -34,4 +34,13 @@ Route::get('password/reset/{token?}', 'Auth\ResetPasswordController@showResetFro
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
+Route::group(['middleware' => 'admin'], function () 
+{
+    Route::get('/manage/products', 'AdminController@viewProducts');
+    Route::get('/manage/products/edit/{id}', 'AdminController@editProduct');
+    Route::get('/manage/products/add', 'AdminController@addProduct');
+    Route::post('/manage/products', 'AdminController@postaddProducts');
+    Route::get('/manage/users', 'AdminController@users');
+    Route::get('/manage/users/{id}', 'AdminController@manageUser');
+});
 

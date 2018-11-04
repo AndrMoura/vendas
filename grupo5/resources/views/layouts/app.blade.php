@@ -33,6 +33,7 @@
                         <button class="dropbtn">{{ Auth::user()->name }} </button>
 
                         <div class="dropdown-content">
+                        @if (Auth::user()->role =='user')
                                 <a  href="/profile/{{Auth::user()->id}}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     Profile 
                                 </a>
@@ -45,6 +46,28 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                         @csrf
                                     </form>
+
+                        @else
+                        <a  href="/manage/products" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Manage products
+                                </a> 
+                                
+                        <a  href="/manage/users" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Manage users 
+                         </a> 
+
+
+                                <a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                </form>
+
+                        @endif
                         @endguest    
                  </nav>
             </div>

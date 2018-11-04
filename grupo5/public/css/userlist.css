@@ -1,0 +1,35 @@
+ol {
+    background:rgb(159, 164, 168);
+    width: 25%;
+    border-radius: 10%;
+    margin: 60px auto;
+}
+
+
+
+ol li {
+    background: rgb(227, 231, 234);
+    padding: 5px;
+    margin-left: 35px;
+}
+
+#listuserid {
+    padding: 19px 39px 18px 39px;
+    color: #FFF;
+    background-color: rgb(159, 164, 168);;
+    font-size: 18px;
+    text-align: center;
+    font-style: normal;
+    border-radius: 5px;
+    width: 10%;
+    border-width: 1px 1px 3px;
+    box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
+    margin-bottom: 10px;
+    display: inline-block;
+    position: relative;
+    left : calc(50% - 78px);
+  }
+  
+#listuserid:hover{
+    background: rgb(39, 105, 0);
+}
