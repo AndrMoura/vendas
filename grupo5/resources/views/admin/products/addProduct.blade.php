@@ -42,6 +42,7 @@
 
 
       </div> 
+            
             <input type="submit" class="editsubmitprofile" value="Save"> 
       </form>
 

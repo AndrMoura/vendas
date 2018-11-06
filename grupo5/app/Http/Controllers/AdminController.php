@@ -32,13 +32,29 @@ class AdminController extends Controller
     public function viewProducts(){
 
        $products = Product::all();
+       $suppliers = Supplier::all();
        $count = $products->count();
-        return view('admin.products.listProducts', compact('products', 'count'));
+        return view('admin.products.listProducts', compact('products', 'count','suppliers'));
     }
 
-    public function addProduct() {
-        $suppliers = Supplier::All();
-        return view('admin.products.addProduct', compact('suppliers'));
+    public function addProduct(Request $req) {
+
+        $this->validate($req, array(
+            'name' => '|min:1|max:255',
+            'price' => 'digits_between:2,5'
+
+        ));
+
+
+        $product = new Product;
+        $product->name = $req->name;
+        $product->price = $req->price;
+        $product->type = $req->type;
+        $product->quantity = $req->quantity;
+        $product->supplier_id = $req->supplier_id;
+        $product->save();
+        return response($product, 200)->header('Content-Type', 'text/plain');
+             
     }
 
     public function postaddProduct(){
