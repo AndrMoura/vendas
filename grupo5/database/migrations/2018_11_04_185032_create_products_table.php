@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->integer('price');
             $table->string('type');
             $table->integer('quantity');
-            
+            $table->string('filepath');
             $table->timestamps();
         });
 

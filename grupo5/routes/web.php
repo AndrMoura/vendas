@@ -37,8 +37,8 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::group(['middleware' => 'admin'], function () 
 {
     Route::get('/manage/products', 'AdminController@viewProducts');
-    Route::get('/manage/products/edit/{id}', 'AdminController@editProduct');
-    Route::get('/manage/products/add', 'AdminController@addProduct');
+    Route::post('/manage/products/edit', 'AdminController@editProduct');
+    Route::post('/manage/products/delete', 'AdminController@deleteProduct');
     Route::post('/manage/products', 'AdminController@addProduct');
     Route::get('/manage/users', 'AdminController@users');
     Route::get('/manage/users/{id}', 'AdminController@manageUser');

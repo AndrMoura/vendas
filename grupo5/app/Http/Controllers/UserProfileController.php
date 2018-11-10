@@ -23,6 +23,7 @@ class UserProfileController extends Controller
 
     public function postEdit(Request $req, $id){
 
+
         $this->validate($req, array(
             'username' => 'nullable|min:5|max:255',
             'email' => "nullable|email",

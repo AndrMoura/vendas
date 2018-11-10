@@ -39,25 +39,53 @@ class AdminController extends Controller
 
     public function addProduct(Request $req) {
 
+
         $this->validate($req, array(
-            'name' => '|min:1|max:255',
-            'price' => 'digits_between:2,5'
+            'name1' => 'min:1|max:100',
+            'quantity1' => 'digits_between:1,5',
+            'price1' => 'digits_between:1,5'
 
         ));
 
+        $file = $req->file('image');
+        $filename = time()."-".$file->getClientOriginalName();
+
 
         $product = new Product;
-        $product->name = $req->name;
-        $product->price = $req->price;
-        $product->type = $req->type;
-        $product->quantity = $req->quantity;
-        $product->supplier_id = $req->supplier_id;
+        $product->name = $req->name1;
+        $product->price = $req->price1;
+        $product->type = $req->type1;
+        $product->quantity = $req->quantity1;
+        $product->supplier_id = $req->supplier_id1;
+        $product->filepath = $filename;
         $product->save();
-        return response($product, 200)->header('Content-Type', 'text/plain');
-             
+
+        $file = $file->move('products/photos',$filename);
+        return response()->json($product);
+
     }
 
-    public function postaddProduct(){
+    public function editProduct(Request $req){
 
+
+        $this->validate($req, array(
+            'dados.name' => 'min:1|max:100',
+            'dados.price' => 'digits_between:1,5',
+            'dados.quantity' => 'digits_between:1,5',
+            'dados.supplier_id' => 'exists:suppliers,id'
+        ));
+
+        $product = Product::where('id', $req->id)->first();
+        $colname = $req->colname;
+        $product->$colname = $req->dados[$colname];
+        $product->save();
+
+    }
+
+    public function deleteProduct(Request $req){
+
+        $product = Product::where('id', $req->id)->first();
+
+        $product->delete();
     }
 }
