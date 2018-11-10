@@ -73,21 +73,22 @@
                 var product = json;
                 var list = $("#table");
 
-                list.append("<td>" + product.id + "</td>");
-                list.append("<td>" + product.name + "</td>");
-                list.append("<td>" + product.price + "</td>");
-                list.append("<td>" + product.type + "</td>");
-                list.append("<td>" + product.quantity + "</td>");
-                list.append("<td>" + product.supplier_id + "</td>");
-                list.append("<td id='remove'><label id='remove_label'>remove</label></td>");
 
+                var $row = $('<tr id="product_list" value=\"' +product.id+'\">>'+
+                    '<td>'+product.id+'</td>'+
+                    '<td>'+product.name+'</td>'+
+                    '<td>'+product.price+'</td>'+
+                    '<td>'+product.type+'</td>'+
+                    '<td>'+product.quantity+'</td>'+
+                    '<td>'+product.supplier_id+'</td>'+
+                    '<td id="remove"><label id="remove_label">remove</label></td>'+
+                    '</tr>');
 
-                $('#name1').val('');
-                $('#price1').val('');
-                $('#type1').val('');
-                $('#quantity1').val('');
-                $('#supplier1').val('');
+                list.append($row);
 
+                $('#name2').val('');
+                $('#price2').val('');
+                $('#quantity2').val('');
 
             })
     }
@@ -96,7 +97,6 @@
 
         var dataObject = {};
         dataObject[colname] = dados;
-
 
         $.ajax({
             method: "POST",
@@ -168,28 +168,26 @@
 
     });
 
-    $(document).ready(function() {
-        $('td').on('click', function() {
-            var td = $(this);
+    $(document).on('click', 'td', function(event){
 
-           if(td.attr('id') == 'remove'){
-                   if(confirm("Are you sure you want to remove this product?")) {
-                       var id =  td.parent().attr('value');
-                       deleteProduct(id);
-                   }
-            }
-            else {
-                td.attr('contenteditable','true');
-                td.focus();
-            }
+        var td= $(this);
 
-        });
+        if(td.attr('id') == 'remove'){
+            if(confirm("Are you sure you want to remove this product?")) {
+                var id =  td.parent().attr('value');
+                deleteProduct(id);
+            }
+        }
+        else {
+            td.attr('contenteditable','true');
+            td.focus();
+        }
+
     });
 
     $(document).ready(function() {
         $("#data").submit(function(e) {
             e.preventDefault();
-            console.log('chegou aki');
             addProduct();
         }
     )});
@@ -200,6 +198,17 @@
 @if($count == 0)
     <p>No products found in the database</p>
 
+    <table id="table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Supplier</th>
+            <th>Price</th>
+            <th>Type</th>
+            <th>Quantity</th>
+            <th>Action</th>
+        </tr>
+    </table>
 @else
 
 <div id="alert" style="display: none">
@@ -239,12 +248,13 @@
             <h3>Add New Product</h3>
 
                 {{ csrf_field() }}
+
             <label for="name">Name</label>
-            <input type="text" name="name1">
+            <input type="text" name="name1" id="name2">
             <p id="name_error"></p>
 
             <label for="price">Price</label>
-            <input type="text" name="price1" >
+            <input type="text" name="price1" id="price2">
             <p id="price_error"></p>
 
               <label for="Type">Type</label>
@@ -255,7 +265,7 @@
                   </select>
 
             <label for="quantity">Quantity</label>
-            <input type="text" name="quantity1">
+            <input type="text" name="quantity1" id="quantity2">
              <p id="quantity_error"></p>
 
             <label for="supplier">Supplier</label>

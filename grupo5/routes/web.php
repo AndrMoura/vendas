@@ -21,11 +21,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::get('/admin', 'AdminController@index')->middleware('admin');
 
+Route::get('/homepage', 'HomePageController@index');
+
 Route::group(['middleware' => 'auth'], function () 
 {
 
     Route::get('/profile/{id}', 'UserProfileController@index');
-    Route::get('/profile/{id}/edit', 'UserProfileController@edit');
     Route::post('/profile/{id}', 'UserProfileController@postEdit');
 
 });

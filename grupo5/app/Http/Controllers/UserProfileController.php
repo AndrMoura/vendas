@@ -15,28 +15,39 @@ class UserProfileController extends Controller
         return view('userprofile.userprofile', compact('user'));
     }
 
-    public function edit()
+    /*public function edit()
     {
         $user = Auth::user();
         return view('userprofile.userprofileedit', compact('user'));;
-    }
+    }*/
 
     public function postEdit(Request $req, $id){
 
+        $user = User::find($id);
+
+        if($user->username == $req->username){
+
+            $this->validate($req, array(
+                'username' => 'required|nullable|min:5|max:255',
+            ));
+        }
+        else {
+            $this->validate($req, array(
+                'username' => 'unique:users|nullable|min:5|max:255',
+            ));
+        }
 
         $this->validate($req, array(
-            'username' => 'nullable|min:5|max:255',
-            'email' => "nullable|email",
+            'email' => "required|nullable|email",
             'address' => 'nullable|min:5|max:255',
             'city' => 'nullable|min:5|max:255',
             'codigopostal' => 'nullable|regex:/^\d{4}-\d{3}?$/',
             'phone' => 'nullable|digits:9'
         ));
 
-        $user = User::find($id);
         $user-> update($req->all());
         session()->flash('msg', "Data saved with success!");
-        return redirect('/profile/'.$user->id);
+        return response('/profile/'.$user->id);
     }
 
 }
