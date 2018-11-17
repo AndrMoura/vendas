@@ -11,10 +11,10 @@
 </head>
 
 @if($count == 0)
-    <b><p>No products found in the database</p><b>
+    <b><p>No products found in the database</p></b>
 
 @else
-
+<div id="teste">
 <div class ="products">
 
 @foreach($products as $product)
@@ -22,16 +22,17 @@
     <div class="product-image">
         <img src="/products/photos/{{$product->filepath}}">
     </div>
+
     <div class="product-info">
       <h5>{{ $product-> name }}</h5>
-      <h6><label>Price: </label>{{ $product-> price }}</h6>
+      <h6><label>Price: </label> {{ $product-> price }} €</h6>
     </div>
   </div>
   @endforeach
 
-  
-   {{$products->links()}}
-
 </div>
+</div>
+
+{{$products->links()}}
 @endif
 @endsection

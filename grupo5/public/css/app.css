@@ -4,7 +4,7 @@
     background-color: #4bc970;
 }
 
-img{
+#appimage{
     background: url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/itCjTBE/bright-green-tech-abstract-animated-background-motion-world-map-graphic-design-clip-ultra-hd-4k-3840x2160_rhdbgsd1e_thumbnail-full04.png") no-repeat center center;
     position: absolute;
     top:0px;
@@ -13,6 +13,7 @@ img{
     height:100%;
     z-index:-1;
     opacity: 0.2;
+    background-repeat: repeat-y;
 }
 
 .navbar a {
