@@ -1,0 +1,48 @@
+.editsubmitprofile {
+    padding: 19px 39px 18px 39px;
+    color: #FFF;
+    background-color: #4bc970;
+    font-size: 18px;
+    text-align: center;
+    font-style: normal;
+    border-radius: 5px;
+    width: auto;
+    max-width: auto;
+    border: 1px solid #3ac162;
+    border-width: 1px 1px 3px;
+    box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
+    margin-bottom: 10px;
+  }
+  .editsubmitprofile:hover{
+    background: rgb(39, 105, 0);
+}
+
+.container
+  {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 10px 20px;
+    text-align: center;
+    background-color:#fff;
+    overflow: hidden;
+    border: solid 1px rgb(167, 167, 167);
+  }
+
+  .resize
+  {
+      float: left;
+      
+  }
+
+  .productprice
+  {
+      color:red;
+      font-weight: bold;
+      font-size: 28px;
+  }
+
+  .infocontainer
+  {
+      overflow: hidden;
+  }
+  

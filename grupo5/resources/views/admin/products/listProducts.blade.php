@@ -73,6 +73,9 @@
                 var product = json;
                 var list = $("#table");
 
+                if( $("#table").length){
+                    $('p').remove();
+                }
 
                 var $row = $('<tr id="product_list" value=\"' +product.id+'\">>'+
                     '<td>'+product.id+'</td>'+

@@ -5,10 +5,12 @@
     background-color: #f6f6f6;
 }
 
-
 .products {
     display: flex;
     flex-wrap: wrap;
+    max-width: 900px;
+    width: 90%;
+    margin: 0 auto;
     /*margin: 100px 200px;*/
 }
 
@@ -23,6 +25,8 @@
     flex-basis: 16%;
     flex-direction: column;
     display:flex;
+    /*cursor: hand;*/
+    cursor: pointer;
 }
 
 .product-info {
@@ -91,4 +95,20 @@
         background-color: gray;
     }
 
-    
+
+#button {
+    background-color: #77ba75;
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 6%;
+}
+
+#button:hover
+{
+    background: rgb(39, 105, 0);
+}

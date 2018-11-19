@@ -17,7 +17,7 @@
 <body>
         <div class="navbar">
         <nav>
-                <a href="{{ url('/homepage') }}" id = "homeclass">
+                <a href="{{ url('/home') }}" id = "homeclass">
                    <strong> Homepage </strong>
                 </a>
                         <!-- Authentication Links -->

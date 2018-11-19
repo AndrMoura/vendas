@@ -17,11 +17,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::get('/admin', 'AdminController@index')->middleware('admin');
 
-Route::get('/homepage', 'HomePageController@index');
+Route::get('/home', 'HomePageController@index');
+Route::get('/home/search', 'HomePageController@search');
+//CART------------------------------------------------------------------------------------------------------------------\
+Route::post('/cart', 'ProductController@saveCart');
+Route::get('/cart', 'ProductController@showCart');
+//------------------------------------------------------------------------------------------------------------------------
+
+Route::get('/product/{id}', 'ProductController@index')->name('produtos');
 
 Route::group(['middleware' => 'auth'], function () 
 {
