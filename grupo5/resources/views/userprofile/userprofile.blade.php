@@ -190,16 +190,16 @@
 <div class="ordertab">
     @for($i = 0; $i < $number_orders; $i++)
 
-        <button class="collapse">
-           #{{$i+1}} Order - Date of Order: {{$orders[$i]['created_at']}}
-        </button>
-    <div class="content">
-        <table>
-            <th> Product Name </th>
-            <th> Quantity </th>
-            <th> Price </th>
-            <th> Total </th>
-            @foreach ($orders[$i]->products as $product)
+                <button class="collapse">
+                    #{{$i+1}} Order - Date of Order: {{$orders[$i]['created_at']}}
+                </button>
+                <div class="content">
+                    <table>
+                        <th> Product Name </th>
+                        <th> Quantity </th>
+                        <th> Price </th>
+                        <th> Total </th>
+                        @foreach ($orders[$i]->products as $product)
 
                 <tr>
                     <td>{{$product->pivot->product_id}}</td>
