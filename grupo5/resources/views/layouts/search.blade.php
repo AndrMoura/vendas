@@ -10,10 +10,13 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <link href = "{{ asset('css/app.css') }}" rel ="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     
 
 </head>
 <img id="appimage" src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/itCjTBE/bright-green-tech-abstract-animated-background-motion-world-map-graphic-design-clip-ultra-hd-4k-3840x2160_rhdbgsd1e_thumbnail-full04.png">
+
+
 <body>
         <div class="navbar">
         <nav>
@@ -21,6 +24,12 @@
                    <strong> Homepage </strong>
                 </a>
                 <input type="text" id="textsearch" placeholder="Search..">
+
+                @if  (Auth::check() && Auth::user()->role == 'user'|| !Auth::check())
+                        <label class ="cartlabel"></label>
+                        <a class="link" href="/cart"> <i id="imagelabel" class="fas fa-cart-plus"></i></a>
+                @endif
+            
                         <!-- Authentication Links -->
                         @guest
                         <a  href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -75,6 +84,8 @@
             </div>
      </div>
 </div>
+
+
 </body>
         <main class="py-4">
             @yield('content')

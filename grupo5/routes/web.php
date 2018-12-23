@@ -23,8 +23,13 @@ Auth::routes();
 
 Route::get('/home', 'HomePageController@index');
 Route::get('/home/search', 'HomePageController@search');
+
 //CART------------------------------------------------------------------------------------------------------------------\
 Route::post('/cart', 'ProductController@saveCart');
+Route::post('/updateCart','ProductController@updateCart');
+Route::post('/home', 'ProductController@saveCartHomePage');
+Route::post('/cart/delete', 'ProductController@deleteCart');
+
 Route::get('/cart', 'ProductController@showCart');
 //------------------------------------------------------------------------------------------------------------------------
 
@@ -52,3 +57,6 @@ Route::group(['middleware' => 'admin'], function ()
     Route::get('/manage/users/{id}', 'AdminController@manageUser');
 });
 
+
+Route::post('/create-payment', 'PaymentController@createPayment');
+Route::post('execute-payment','PaymentController@executePayment');

@@ -37,11 +37,11 @@
                                 <a  href="/profile/{{Auth::user()->id}}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     Profile 
                                 </a>
-                                    <a href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                                <a href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
                                                                 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                         @csrf

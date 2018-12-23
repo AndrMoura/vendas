@@ -43,7 +43,8 @@ class AdminController extends Controller
         $this->validate($req, array(
             'name1' => 'min:1|max:100',
             'quantity1' => 'digits_between:1,5',
-            'price1' => 'digits_between:1,5'
+            'price1' => 'digits_between:1,5',
+            'image' => 'required|image'
 
         ));
 
@@ -67,7 +68,6 @@ class AdminController extends Controller
 
     public function editProduct(Request $req){
 
-
         $this->validate($req, array(
             'dados.name' => 'min:1|max:100',
             'dados.price' => 'digits_between:1,5',
@@ -77,6 +77,7 @@ class AdminController extends Controller
 
         $product = Product::where('id', $req->id)->first();
         $colname = $req->colname;
+
         $product->$colname = $req->dados[$colname];
         $product->save();
 

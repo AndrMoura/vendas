@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Product;
+use App\Order;
 use App\Cart;
 
 class User extends Authenticatable
@@ -30,11 +31,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function products(){
-        return $this->belongsToMany('App\Product','products_users');
-     }
 
      public function cart(){
         return $this->hasOne('App\Cart');
      }
+
+    public function orders(){
+        return $this->hasMany('App\Order');
+    }
 }

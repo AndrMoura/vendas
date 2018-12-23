@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
-use App\User;
+use App\Cart;
 use App\Product;
 
 class HomePageController extends Controller
@@ -13,9 +13,12 @@ class HomePageController extends Controller
     
     public function index()
     {
+
         $products = Product::paginate(10);
         $productsall = Product::all();
         $count = $productsall->count();
+
+        //$quantity = Cart::all()->where('user_id',Auth::user()->id)->sum('quantity');
         return view('homepage', compact('products', 'count'));
     }
 
@@ -35,5 +38,7 @@ class HomePageController extends Controller
     return view('homepagesearch', compact('product', 'count'));
 
     }
+
+    
     
 }

@@ -1,0 +1,58 @@
+.shopping-cart
+  {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 10px 20px;
+    text-align: center;
+    background-color:#fff;
+    overflow: hidden;
+    border: solid 1px rgb(167, 167, 167);
+  }
+
+  .lowercartpage
+  {
+      float: right;
+      background-color:#fff;
+      border: solid 1px rgb(167, 167, 167);
+
+  }
+
+  #table
+  {
+      width:1000px;
+  }
+
+  #remove_label{
+    background-color: #f4825d;
+    text-align: center;
+    margin: 5px;
+    padding : 5px;
+}
+
+#remove_label:hover {
+    background-color: #f4ac86;
+}
+
+#inputquantity
+{
+    width: 40px;
+}
+
+.maxcontainer
+{
+    max-width: 1000px;
+    margin:  auto;
+    padding: 10px 20px;
+    overflow: hidden;
+}
+
+
+  .buybutton:hover{
+    background: rgb(39, 105, 0);
+}
+
+#cartimage
+{
+    width:75px;
+    height: 75px;
+}

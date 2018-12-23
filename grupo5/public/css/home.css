@@ -5,6 +5,13 @@
     background-color: #f6f6f6;
 }
 
+#alert 
+ {
+    padding: 20px;
+    background-color:  #007F00;
+    color: white;
+}
+
 .products {
     display: flex;
     flex-wrap: wrap;

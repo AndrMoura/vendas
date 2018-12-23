@@ -52,7 +52,7 @@
                $("#name_error").text("");
                $("#price_error").text("");
                $("#quantity_error").text("");
-
+               $("#file_error").text("");
                for(var error in errors){
 
                    if(error == 'name1'){
@@ -63,6 +63,9 @@
                    }
                    if(error == 'quantity1'){
                        $("#quantity_error").text(errors[error][0]);
+                   }
+                   if(error == 'image'){
+                       $("#file_error").text('File is not an image');
                    }
 
                 }
@@ -79,11 +82,11 @@
 
                 var $row = $('<tr id="product_list" value=\"' +product.id+'\">>'+
                     '<td>'+product.id+'</td>'+
-                    '<td>'+product.name+'</td>'+
-                    '<td>'+product.price+'</td>'+
-                    '<td>'+product.type+'</td>'+
-                    '<td>'+product.quantity+'</td>'+
-                    '<td>'+product.supplier_id+'</td>'+
+                    '<td id="name" >'+product.name+'</td>'+
+                    '<td id="supplier_id" >'+product.supplier_id+'</td>'+
+                    '<td id="price">'+product.price+'</td>'+
+                    '<td id="type">'+product.type+'</td>'+
+                    '<td id="quantity">'+product.quantity+'</td>'+
                     '<td id="remove"><label id="remove_label">remove</label></td>'+
                     '</tr>');
 
@@ -100,7 +103,6 @@
 
         var dataObject = {};
         dataObject[colname] = dados;
-
         $.ajax({
             method: "POST",
             url: "http://127.0.0.1:8000/manage/products/edit",
@@ -166,12 +168,13 @@
             var id = event.target.parentElement.attributes[1].textContent;
             var data = event.target.innerText;
             var col_name = event.target.id;
-
+            console.log(col_name);
+            console.log(data);
             editProduct(id, data, col_name);
 
     });
 
-    $(document).on('click', 'td', function(event){
+    $(document).on('click', 'td', function(){
 
         var td= $(this);
 
@@ -281,6 +284,7 @@
           <br>
 
           <input type="file" id="file1" name="image" title="Photo">
+          <p id="file_error"></p>
 
       </div>
             <button class="editsubmitprofile"> Add Product </button>

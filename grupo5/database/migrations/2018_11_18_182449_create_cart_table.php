@@ -18,6 +18,7 @@ class CreateCartTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('product_id');
+            $table->string('filepath');
             $table->string('name');
             $table->integer('quantity');
             $table->integer('price');

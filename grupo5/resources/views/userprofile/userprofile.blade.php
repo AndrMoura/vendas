@@ -4,6 +4,8 @@
 
 <link href = "{{ asset('css/main.css') }}" rel ="stylesheet">
 <link href = "{{ asset('css/profile.css') }}" rel ="stylesheet">
+<link href = "{{ asset('css/tab.css') }}" rel ="stylesheet">
+<link href = "{{ asset('css/collapse.css') }}" rel ="stylesheet">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
@@ -112,7 +114,13 @@
     <label id="edit_success" ></label>
 </div>
 
-<form action="/profile/{{Auth::user()->id}}" method="POST">
+<div class="tab">
+    <button id='tab1' class="tablinks" >Profile</button>
+    <button id='tab2' class="tablinks" >Orders</button>
+</div>
+
+<div class="profiletab">
+<form action="/profile/{{Auth::user()->id}}" method="POST" >
     <div class="displayprofile" id="{{Auth::user()->id}}">
         <h3>Edit User Profile</h3>
         <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -143,6 +151,68 @@
     </div>
     <input  id="submit" class="editsubmitprofile" value="Save">
 </form>
+</div>
+
+<script>
+
+    $(document).ready(function() {
+        $('.ordertab').css('display', 'none');
+    });
+
+    $(document).on('click', "#tab1", function(e){
+
+           $('.profiletab').css('display', 'block');
+           $('.ordertab').css('display', 'none');
+        }
+    );
+    $(document).on('click', "#tab2", function(e){
+
+           $('.profiletab').css('display', 'none');
+           $('.ordertab').css('display', 'block');
+        }
+    );
+
+</script>
+
+<script>
+
+    $(document).on('click', ".collapse", function() {
+
+        var $this = $(this).toggleClass('active');
+        var content = $this.next().toggleClass('show');
+        $('.collapse.active').not(this).removeClass('active').next().removeClass('show');
+
+    });
+
+
+</script>
+
+<div class="ordertab">
+    @for($i = 0; $i < $number_orders; $i++)
+
+        <button class="collapse">
+           #{{$i+1}} Order - Date of Order: {{$orders[$i]['created_at']}}
+        </button>
+    <div class="content">
+        <table>
+            <th> Product Name </th>
+            <th> Quantity </th>
+            <th> Price </th>
+            <th> Total </th>
+            @foreach ($orders[$i]->products as $product)
+
+                <tr>
+                    <td>{{$product->pivot->product_id}}</td>
+                    <td>{{$product->pivot->quantity}}</td>
+                    <td>{{$product->pivot->unit_price}}</td>
+                    <td>{{$product->pivot->quantity*$product->pivot->unit_price}}</td>
+                </tr>
+
+        @endforeach
+        </table>
+    </div>
+    @endfor
+</div>
 
 <script>
     $(document).ready(function(){

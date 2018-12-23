@@ -5,17 +5,20 @@
 <link href = "{{ asset('css/main.css') }}" rel ="stylesheet">
 <link href = "{{ asset('css/productpage.css') }}" rel ="stylesheet">
 
+
 <script>
+
     $(document).ready(function() {
         $("#cart").click(function () {
 
-                //$('#cart').val();
-                $('#form').submit();
-            });
+        $('#form').submit();
+        });
     });
 
  $(document).ready(function() {
+
         $("#textsearch").keypress(function (event) {
+
             if(event.keyCode == 13)
             {
                 console.log($(this).val());
@@ -25,6 +28,37 @@
         });
 
     });
+
+    $(document).ready(function() { //FAZER FUNÇAO FICHEIRO SEPARADO
+
+        var checkLogin = "{{{ (Auth::user()) ? Auth::user() : null }}}";
+        console.log(checkLogin);
+        if(checkLogin){
+
+            $('.cartlabel').text({{Session::get('quantity')}});
+        }
+        else {
+
+            var coded = "{{Cookie::get('cart') != "" ? Cookie::get('cart') : ""}}";
+
+            if(coded != ""){
+
+                var cart = jQuery.parseJSON($.parseHTML(coded)[0].textContent);
+                var sum = 0;
+
+                for (var product in cart) {
+
+                    sum +=cart[product]['quantity'];
+            }
+                $('.cartlabel').text(sum);
+            }
+            else{
+                $('.cartlabel').text(0);
+            }
+
+        }
+    });
+
 </script>
 
 <script>
@@ -75,9 +109,15 @@ $('.resize').hover(
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="id" value="{{$product->id}}">
         </form>
+        @if  (Auth::check() && Auth::user()->role == 'user'|| !Auth::check())
+            <button id='cart' value ='{{$product->id}}'class="editsubmitprofile">Add to Cart</button>
+            <button class="editsubmitprofile"> Buy Now </button>
+        @else
+            <button id='cart' value ='{{$product->id}}'class="editsubmitprofile" disabled style="background-color:#a1ada1; cursor:not-allowed;">Add to Cart</button>
+            <button class="editsubmitprofile" disabled style="background-color:#a1ada1; cursor:not-allowed;"> Buy Now </button>
 
-         <button id='cart' value ='{{$product->id}}'class="editsubmitprofile">Add to Cart</button>
-         <button class="editsubmitprofile"> Buy Now </button>
+        @endif
+
     </div>
   
     <br>

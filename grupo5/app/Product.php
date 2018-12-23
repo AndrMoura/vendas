@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    public function users(){
-        return $this->belongsToMany('App\User','products_users');
+    public function orders(){
+        return $this->belongsToMany('App\Order','orders_products')->withPivot('quantity', 'unit_price');
      }
 
      public function suppliers(){
