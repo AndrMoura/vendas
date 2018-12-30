@@ -1,15 +1,43 @@
 table {
     border-collapse: collapse;
     width: 40%;
-    margin : auto;
+    margin : 20px auto;
+
 }
 
 th, td {
-    text-align: left;
     padding: 8px;
+    text-align: center;
+    vertical-align: middle;
 }
 
 th {
-    background-color:rgba(95, 95, 95, 0.1);
+    background: linear-gradient(to bottom, #7d7e7d 0%,#3c3838 100%);
     color: white;
+}
+
+table, th, td {
+    border: 1px solid #867777;
+}
+
+.button {
+    padding: 19px 39px 18px 39px;
+    color: #FFF;
+    background-color: #4bc970;
+    font-size: 18px;
+    text-align: center;
+    font-style: normal;
+    border-radius: 5px;
+    width: 10%;
+    border: 1px solid #3ac162;
+    border-width: 1px 1px 3px;
+    box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
+    margin-bottom: 10px;
+    display: inline-block;
+    position: relative;
+    left: calc(50% - 78px);
+}
+
+.button:hover{
+    background: rgb(39, 105, 0);
 }

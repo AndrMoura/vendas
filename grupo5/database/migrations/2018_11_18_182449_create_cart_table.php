@@ -21,7 +21,7 @@ class CreateCartTable extends Migration
             $table->string('filepath');
             $table->string('name');
             $table->integer('quantity');
-            $table->integer('price');
+            $table->decimal('price');
             $table->timestamps();
         });
     }

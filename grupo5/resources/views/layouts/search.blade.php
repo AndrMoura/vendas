@@ -57,7 +57,6 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                         @csrf
                                     </form>
-
                         @else
                         <a  href="/manage/products" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     Manage products
@@ -65,9 +64,7 @@
                                 
                         <a  href="/manage/users" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     Manage users 
-                         </a> 
-
-
+                         </a>
                                 <a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

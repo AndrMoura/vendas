@@ -18,6 +18,7 @@
         text-align: center;
         margin: 5px;
     }
+
     #remove_label:hover {
         background-color: #f4ac86;
     }
@@ -28,12 +29,13 @@
 <link href = "{{ asset('css/main.css') }}" rel ="stylesheet">
 <link href = "{{ asset('css/profile.css') }}" rel ="stylesheet">
 <link href = "{{ asset('css/table.css') }}" rel ="stylesheet">
+<link href = "{{ asset('css/alerts.css') }}" rel ="stylesheet">
+<link href = "{{ asset('css/pagination.css') }}" rel ="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script>
 
     function addProduct(){
-
 
        $.ajax({
 
@@ -53,16 +55,17 @@
                $("#price_error").text("");
                $("#quantity_error").text("");
                $("#file_error").text("");
-               for(var error in errors){
 
+               for(var error in errors){
                    if(error == 'name1'){
                        $("#name_error").text(errors[error][0]);
                    }
                    if(error == 'price1'){
-                       $("#price_error").text(errors[error][0]);
+                       $("#price_error").html(errors[error][0]);
                    }
                    if(error == 'quantity1'){
-                       $("#quantity_error").text(errors[error][0]);
+                       $("#quantity_error").text("teste");
+                       console.log("erro");
                    }
                    if(error == 'image'){
                        $("#file_error").text('File is not an image');
@@ -96,6 +99,8 @@
                 $('#price2').val('');
                 $('#quantity2').val('');
 
+                $("#success").css('display', 'block')
+                $("#edit_success").text("Product added with success!");
             })
     }
 
@@ -128,9 +133,19 @@
                     $("#edit_error").text(errors[error][0]);
                 }
             }
-        })
 
-    }
+        }).done(function(){
+            console.log("editou produto");
+            $("#success").css('display', 'block')
+            $("#edit_success").text("Data saved with success!");
+    })}
+
+        $(document).ready(function() {
+            $("#success").click(function () {
+                $('#success').hide("slow");
+            });
+        });
+
 
     function deleteProduct(id){
 
@@ -202,8 +217,8 @@
 </script>
 
 @if($count == 0)
-    <p>No products found in the database</p>
 
+    <p>No products found in the database</p>
     <table id="table">
         <tr>
             <th>ID</th>
@@ -221,13 +236,16 @@
     <label id="edit_error" ></label>
 </div>
 
+<div id="success" style="display: none">
+    <label id="edit_success" ></label>
+</div>
 
 <table id="table">
     <tr>
         <th>ID</th>
         <th>Name</th>
         <th>Supplier</th>
-        <th>Price</th>
+        <th>Price (EUR)</th>
         <th>Type</th>
         <th>Quantity</th>
         <th>Action</th>
@@ -249,6 +267,8 @@
 </table>
 @endif
 
+{{$products->links()}}
+
 <form id="data" method="post" enctype="multipart/form-data">
       <div class="displayprofile">
             <h3>Add New Product</h3>
@@ -259,7 +279,7 @@
             <input type="text" name="name1" id="name2">
             <p id="name_error"></p>
 
-            <label for="price">Price</label>
+            <label for="price">Price (EUR)</label>
             <input type="text" name="price1" id="price2">
             <p id="price_error"></p>
 
@@ -289,5 +309,6 @@
       </div>
             <button class="editsubmitprofile"> Add Product </button>
 </form>
+
 
 @endsection

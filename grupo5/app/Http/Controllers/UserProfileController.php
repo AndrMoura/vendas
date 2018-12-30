@@ -15,8 +15,10 @@ class UserProfileController extends Controller
     public function index(){
 
         $user = Auth::user();
-        $orders = Order::where('user_id', $user->id)->get(); //todas as orders
-        $number_orders = Order::where('user_id', $user->id)->count();
+        $orders = Order::where('user_id', $user->id)->paginate(10); //todas as orders
+        $number_orders = count($orders);
+        //$number_orders = Order::where('user_id', $user->id)->count();
+        $orders->appends(['page' => 'asd'])->links();
         $products = Product::all();
 
         return view('userprofile.userprofile', compact('user', 'orders', 'products', 'number_orders'));

@@ -16,11 +16,6 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-//Route::get('/home', 'HomeController@index')->name('home');
-
-//Route::get('/admin', 'AdminController@index')->middleware('admin');
-
 Route::get('/home', 'HomePageController@index');
 Route::get('/home/search', 'HomePageController@search');
 
@@ -30,7 +25,7 @@ Route::post('/updateCart','ProductController@updateCart');
 Route::post('/home', 'ProductController@saveCartHomePage');
 Route::post('/cart/delete', 'ProductController@deleteCart');
 
-Route::get('/cart', 'ProductController@showCart');
+Route::get('/cart', 'ProductController@showCart')->name('cart');
 //------------------------------------------------------------------------------------------------------------------------
 
 Route::get('/product/{id}', 'ProductController@index')->name('produtos');
@@ -40,12 +35,16 @@ Route::group(['middleware' => 'auth'], function ()
 
     Route::get('/profile/{id}', 'UserProfileController@index');
     Route::post('/profile/{id}', 'UserProfileController@postEdit');
-
+    Route::get('/profile/{id}/paymentDetails','PaymentController@getSalesId');
+    Route::post('/create-payment', 'PaymentController@createPayment');
+    Route::post('execute-payment','PaymentController@executePayment');
+    Route::get('/pdf', 'PDFController@getPDF');
 });
 
 Route::get('password/reset/{token?}', 'Auth\ResetPasswordController@showResetFrom');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+
 
 Route::group(['middleware' => 'admin'], function () 
 {
@@ -57,6 +56,3 @@ Route::group(['middleware' => 'admin'], function ()
     Route::get('/manage/users/{id}', 'AdminController@manageUser');
 });
 
-
-Route::post('/create-payment', 'PaymentController@createPayment');
-Route::post('execute-payment','PaymentController@executePayment');

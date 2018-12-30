@@ -4,6 +4,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link href = "{{ asset('css/cart.css') }}" rel ="stylesheet">
 <link href = "{{ asset('css/main.css') }}" rel ="stylesheet">
+<link href = "{{ asset('css/windowAlert.css') }}" rel ="stylesheet">
 
 
 <script>
@@ -22,6 +23,9 @@
             contentType: 'application/x-www-form-urlencoded',
             error: function (data) {
 
+                var data = data.responseJSON;
+                $('.modal').css('display','block');
+                $('#modaltext').text(data['error']);
             }
         })
             .done(function(cart){
@@ -68,7 +72,6 @@
             contentType: 'application/x-www-form-urlencoded',
             error: function (data) {
 
-
             }
         })
             .done(function(){
@@ -76,9 +79,7 @@
                 var productRow =  $("[id=" + id + "]");
 
                 productRow.remove();
-
                 var sum = 0;
-
 
                 $('.subtotal').each(function(){
                     sum += parseFloat($(this).text());
@@ -95,6 +96,11 @@
             })
     }
 
+    $(document).ready(function() {
+        $(".modal").click(function () {
+            $('.modal').hide("slow");
+        });
+    });
 
     $(document).on('click', 'td', function(){
 
@@ -134,9 +140,21 @@
 </script>
 @if((empty($products) && Auth::check()) || empty($products) && !Auth::check() )
 
-    <p>No items in cart</p>
+    <p style="text-align: center;font-size: 40px;">No items in cart</p>
 
 @else
+
+    <div id="myModal" class="modal" style="display: none">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Error</h2>
+            </div>
+            <div class="modal-body">
+                <p id="modaltext"></p>
+            </div>
+        </div>
+    </div>
 
 <div class="maxcontainer">
   <div class="shopping-cart">
@@ -197,18 +215,15 @@
 
 <script>
     paypal.Button.render({
-        env: 'sandbox', // Or 'production'
-        // Set up the payment:
-        // 1. Add a payment callback
+        env: 'sandbox',
         payment: function(data, actions) {
 
-            // 2. Make a request to your server
             return actions.request.post('/create-payment', {
                 _token: '{{csrf_token() }}',
                 checkType: true
             })
                 .then(function(res) {
-                    // 3. Return res.id from the response
+
                     console.log(res);
                     if(res.hasOwnProperty('Error')){
                         console.log('entrou aki');
@@ -217,10 +232,8 @@
                     return res.id;
                 })
         },
-        // Execute the payment:
-        // 1. Add an onAuthorize callback
         onAuthorize: function(data, actions) {
-            // 2. Make a request to your server
+
             return actions.request.post('execute-payment', {
                 _token: '{{csrf_token() }}',
                 paymentID: data.paymentID,
@@ -228,6 +241,11 @@
             })
                 .then(function (res) {
                     console.log(res);
+                    $('.maxcontainer').remove();
+                    $('#paypal-button').remove();
+                    var noItems = $("<p></p>").text("no items in cart.");
+                    $("body").append(noItems);
+                    $(".cartlabel").text(0);
                 })
         }
     }, '#paypal-button');

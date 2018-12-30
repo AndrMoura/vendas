@@ -2,6 +2,7 @@
     overflow: hidden;
     font-family: Arial, Helvetica, sans-serif;
     background-color: #4bc970;
+    background: linear-gradient(to bottom, #33cc33 45%, #ccffcc 135%);
 }
 
 .navbar input[type=text], .cartlabel{

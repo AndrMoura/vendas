@@ -2,17 +2,6 @@
 
 use Illuminate\Http\Request;
 
-use PayPal\Api\Item;
-use PayPal\Api\Payer;
-use PayPal\Api\Amount;
-use PayPal\Api\Details;
-use PayPal\Api\Payment;
-use PayPal\Api\ItemList;
-use PayPal\Api\WebProfile;
-use PayPal\Api\InputFields;
-use PayPal\Api\Transaction;
-use PayPal\Api\RedirectUrls;
-use PayPal\Api\PaymentExecution;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,6 +16,37 @@ use PayPal\Api\PaymentExecution;
 
 
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('guest')->get('/user', function (Request $request) {
+   return "CARALHO";
+});*/
+
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});/*
+
+/*Route::group(['prefix' => 'api'], function () {
+    dd("chegou aki");
+    Route::group(['prefix' => 'user'], function ()
+    {
+        Route::get('{id}', function($id){
+            return "TESTE";
+        });
+    });
+});*/
+
+Route::post('login', 'API\UserController@login');
+Route::post('register', 'API\UserController@register');
+
+Route::group(['middleware' => 'auth:api'], function(){
+
+    Route::get('details', 'API\UserController@details');
+
 });
+
+
+Route::get('/products/', "Api@products");
+
+Route::get('/products/{id}', 'Api@product');
+Route::get('/products/{id}/price', 'Api@productPrice');
+Route::get('/products/{id}/name', 'Api@productName');
+

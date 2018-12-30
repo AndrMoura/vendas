@@ -17,20 +17,29 @@ class ProductController extends Controller
         return view('products.product',compact('product'));
     }
 
-    public function saveCart(Request $request){
+    public function saveCart(Request $request){ //pagina do produto
 
         $insertProduct = Product::find($request->id);
 
+        if($insertProduct->quantity == 0){
+            return redirect()->back()->withSuccess('Not enough Products in stock');
+        }
         if(Auth::user()){
+
+            $user = Auth::user();
+            $cart = Cart::where('user_id', $user->id)
+                ->where('product_id',$request->id)->first();
+
+            $checkQuantity = $cart->quantity + 1;
+
+            if($insertProduct->quantity < $checkQuantity){
+                return redirect()->back()->withSuccess('Not enough Products in stock');
+            }
 
             $updateCartSession = session('quantity');
 
             $updateCartSession = $updateCartSession + 1;
             session(['quantity' => $updateCartSession]);
-
-            $user = Auth::user();
-            $cart = Cart::where('user_id', $user->id)
-            ->where('product_id',$request->id)->first();
 
             if($cart  != null){
 
@@ -64,9 +73,6 @@ class ProductController extends Controller
 
         }
 
-
-
-
         else {
             $hasFound = false;
             if ($request->hasCookie('cart')) {
@@ -76,6 +82,11 @@ class ProductController extends Controller
 
                 foreach ($products as &$product) {
 
+                    if($insertProduct->quantity < $product['quantity'] +1 )
+                    {
+                        return response()->json(['error'=>"Not enough products"], 500);
+                    }
+
                     if($product['product_id']  == $request->id){
                         $product['quantity'] += 1;
                         $hasFound = true;
@@ -83,6 +94,11 @@ class ProductController extends Controller
                     }
                 }
                 if(!$hasFound){
+
+                    if($insertProduct->quantity < 1){
+
+                        return response()->json(['error'=>"Not enough products"], 500);
+                    }
 
                     $newProduct = array($insertProduct->id => array(
                         'product_id' => $insertProduct->id,
@@ -111,6 +127,10 @@ class ProductController extends Controller
             }
             else {
 
+                if($insertProduct->quantity < 1){
+
+                    return response()->json(['error'=>"Not enough products"], 500);
+                }
                 $products = array(
 
                     $insertProduct->id => array(
@@ -136,12 +156,23 @@ class ProductController extends Controller
 
         $insertProduct = Product::find($request->id);
 
+        if($insertProduct->quantity == 0){
+            return response()->json(['error'=>"Not enough product in stock found"], 500);
+        }
+
         if (Auth::user()) {
 
             $user = Auth::user();
             $cart = Cart::where('user_id', $user->id)
                 ->where('product_id', $request->id)->first();
 
+            $product = Product::where('id',$cart->product_id)->first();
+
+            $checkQuantity = $cart->quantity + 1;
+
+            if($product->quantity < $checkQuantity){
+                return response()->json(['error'=>"Not enough products"], 500);
+            }
 
             if ($cart != null) {
 
@@ -170,25 +201,33 @@ class ProductController extends Controller
 
         }
 
-
-
-
         else {
+
             $hasFound = false;
             if ($request->hasCookie('cart')) {
                 $cart = Cookie::get('cart');
 
-                $cart = json_decode($cart, true);
+                $cart = json_decode($cart, true); //é o coockie
 
                 foreach ($cart as &$product) {
 
                    if($product['product_id']  == $request->id){
+
+                       if($insertProduct->quantity < $product['quantity'] +1 )
+                       {
+                           return response()->json(['error'=>"Not enough products"], 500);
+                       }
                            $product['quantity'] += 1;
                            $hasFound = true;
                            break;
                    }
                 }
                 if(!$hasFound){
+
+                    if($insertProduct->quantity < 1){
+
+                        return response()->json(['error'=>"Not enough products"], 500);
+                    }
 
                     $newProduct = array($insertProduct->id => array(
                             'product_id' => $insertProduct->id,
@@ -215,6 +254,10 @@ class ProductController extends Controller
             }
             else {
 
+                if($insertProduct->quantity < 1){
+
+                    return response()->json(['error'=>"Not enough products"], 500);
+                }
             $cart = array(
 
                 $insertProduct->id => array(
@@ -262,52 +305,68 @@ class ProductController extends Controller
 
     public function updateCart(Request $request){
 
-    if(Auth::user()){
+        if(Auth::user()){
 
-        $user = Auth::user();
-        $cart = Cart::where('user_id',$user->id)->where('id',$request->id)->first();
+            $user = Auth::user();
+            $cart = Cart::where('user_id',$user->id)->where('id',$request->id)->first();
 
-        $cart->quantity = $request->quantity;
+            $product = Product::where('id',$cart->product_id)->first();
 
-        $user->cart()->save($cart);
+            $overrallQuantity = $request->quantity - $cart->quantity;
 
-        $cart = Cart::where('user_id',$user->id)->find($request->id);
+            $checkQuantity = $cart->quantity + $overrallQuantity;
 
-        $cart_all = Cart::all()->where('user_id',$user->id)->sum('quantity');
-
-        session(['quantity' =>  $cart_all]);
-        return response()->json($cart);
-    }
-
-    else{
-
-        if ($request->hasCookie('cart')) {
-
-            $products = Cookie::get('cart');
-
-            $products =json_decode($products, true);
-
-            $productUpdate = 0;
-
-            foreach($products as &$product){
-
-                if($product['product_id'] == $request->id){
-
-                    $product['quantity'] = intval($request->quantity); //request vem em string
-
-                    $productUpdate = $product;
-                }
+            if($product->quantity < $checkQuantity){
+                return response()->json(['error'=>"Not enough products"], 500);
             }
 
-            Cookie::queue('cart', json_encode($products), 60);
+            $cart->quantity = $request->quantity;
 
-            return response()->json($productUpdate);
+            $user->cart()->save($cart);
 
+            $cart = Cart::where('user_id',$user->id)->find($request->id);
+
+            $cart_all = Cart::all()->where('user_id',$user->id)->sum('quantity');
+
+            session(['quantity' =>  $cart_all]);
+            return response()->json($cart);
         }
-    }
+
+        else{
+
+            if ($request->hasCookie('cart')) {
+
+                $products = Cookie::get('cart');
+
+                $products =json_decode($products, true);
+
+                $productUpdate = 0;
+
+                foreach($products as &$product){
+
+                    if($product['product_id'] == $request->id){
+                        $produtoLoja = Product::where('id', $request->id)->first();
+
+                        if($produtoLoja->quantity < $request->quantity){
+                            return response()->json(['error'=>"Not enough products"], 500);
+                        }
+                        else {
+                            $product['quantity'] = intval($request->quantity); //request vem em string
+
+                            $productUpdate = $product;
+                        }
+
+
+                    }
+                }
+
+                Cookie::queue('cart', json_encode($products), 60);
+
+                return response()->json($productUpdate);
+
+            }
+        }
 }
-
-
 
     public function showCart(Request $request)
     {
@@ -352,7 +411,6 @@ class ProductController extends Controller
 
     public function deleteCart(Request $request){
 
-
         if(Auth::user()){
 
           $user =  Auth::user();
@@ -373,10 +431,7 @@ class ProductController extends Controller
                 $products = json_decode( $products, true);
                 unset($products[$request->id]);
 
-
-
                 Cookie::queue('cart', json_encode($products), 60);
-
 
             }
         }

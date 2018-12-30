@@ -5,6 +5,7 @@
 
 <link href = "{{ asset('css/main.css') }}" rel ="stylesheet">
 <link href = "{{ asset('css/home.css') }}" rel ="stylesheet">
+<link href = "{{ asset('css/windowAlert.css') }}" rel ="stylesheet">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
 
@@ -88,7 +89,9 @@ function addProductCard(id){
         xhrFields: { withCredentials: true },
         contentType: 'application/x-www-form-urlencoded',
         error: function (data) {
-
+            var data = data.responseJSON;
+           $('.modal').css('display','block');
+           $('#modaltext').text(data['error']);
         }
 
     })
@@ -106,6 +109,12 @@ function addProductCard(id){
 
 })
 }
+
+$(document).ready(function() {
+    $(".modal").click(function () {
+        $('.modal').hide("slow");
+    });
+});
 
 function searchProduct(name){
 
@@ -172,15 +181,25 @@ function searchProduct(name){
 
                         var checkUser =  "{{{ (Auth::user()) ? Auth::user() : "" }}}";
 
-                        button.attr("value",product[0].id);
-                        button.attr("id","button");
-                        button.html("<i class='fas fa-cart-plus'></i>");
+                        if(checkUser != ""){
+                            checkUser = jQuery.parseJSON($.parseHTML(checkUser)[0].textContent);
 
-                        if(checkUser && checkUser['role'] == 'admin' || checkUser != ""){
-                            button.attr("disabled","true");
-                            button.css("background-color", "#a1ada1");
-                            button.css("cursor", "not-allowed");
+                            button.attr("value",product[0].id);
+                            button.attr("id","button");
+                            button.html("<i class='fas fa-cart-plus'></i>");
+
+                            if(checkUser && checkUser['role'] == 'admin'){
+                                button.attr("disabled","true");
+                                button.css("background-color", "#a1ada1");
+                                button.css("cursor", "not-allowed");
+                            }
                         }
+                        else {
+                            button.attr("value",product[0].id);
+                            button.attr("id","button");
+                            button.html("<i class='fas fa-cart-plus'></i>");
+                        }
+
 
                         var link = $("<a/>");
                         link.attr('id', 'link');
@@ -225,6 +244,18 @@ function searchProduct(name){
 
 @else
 
+<div id="myModal" class="modal" style="display: none">
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Error</h2>
+        </div>
+        <div class="modal-body">
+            <p id="modaltext"></p>
+        </div>
+    </div>
+</div>
+
 <div id="alert" style="display: none">
     <label id="success" ></label>
 </div>
@@ -240,7 +271,7 @@ function searchProduct(name){
 
     <div class="product-info">
         <h5>{{ $product-> name }}</h5>
-        <h6>Price: {{ $product-> price }} €</h6>
+        <h6>{{ $product-> price }} €</h6>
         @if  (Auth::check() && Auth::user()->role == 'user'|| !Auth::check())
             <button  id="button"  value="{{$product->id}}"><i class="fas fa-cart-plus"></i></button>
         @else
@@ -253,7 +284,6 @@ function searchProduct(name){
 
 </div>
 </div>
-
 
 {{$products->links()}}
 @endif

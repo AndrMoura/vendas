@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->integer('supplier_id')->unsigned();
             $table->string('name');
-            $table->integer('price');
+            $table->decimal('price');
             $table->string('type');
             $table->integer('quantity');
             $table->string('filepath');

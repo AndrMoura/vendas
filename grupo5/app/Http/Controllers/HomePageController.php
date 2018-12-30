@@ -14,7 +14,7 @@ class HomePageController extends Controller
     public function index()
     {
 
-        $products = Product::paginate(10);
+        $products = Product::paginate(8);
         $productsall = Product::all();
         $count = $productsall->count();
 
