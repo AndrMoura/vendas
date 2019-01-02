@@ -9,7 +9,7 @@ use Cookie;
 use App\Product;
 use App\Cart;
 use App\User;
-
+use Session;
 
 class LoginController extends Controller
 {
@@ -31,7 +31,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -43,7 +43,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected function authenticated($user)
+    protected function authenticated($request, $user)
     {
         $cart = Cookie::get('cart');
         $cart = json_decode( $cart, true);
@@ -54,6 +54,9 @@ class LoginController extends Controller
         Cookie::queue(
             Cookie::forget('cart')
         );
+
+        $request->session()->flash('login', 'Welcome to laravel shop!');
+        return redirect()->intended($this->redirectPath());
     }
 
     protected function setUserSession($user, $cart)

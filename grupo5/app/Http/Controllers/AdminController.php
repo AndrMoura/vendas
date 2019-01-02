@@ -48,7 +48,8 @@ class AdminController extends Controller
         ], [
             'name1.min' => 'The Name may not be less than 1 characters.',
             'quantity1.digits_between' => 'Quantity must be a digit between 1 and 5.',
-            'price1.digits_between' => 'Price must be a digit between 1 and 5',
+            'price1.price.numeric' => 'Price must be a numeric value, no commas',
+            'price1.price.min' => 'Price has a min value over 1 EUR',
             'image.required' => 'An Image is required',
             'image.image' => 'The file must be an image'
         ]);
@@ -66,6 +67,7 @@ class AdminController extends Controller
         $product->filepath = $filename;
         $product->save();
 
+
         $file = $file->move('products/photos',$filename);
         return response()->json($product);
 
@@ -82,7 +84,8 @@ class AdminController extends Controller
             'dados.name.min' => 'The Name may not be less than 1 characters.',
             'dados.name.max' => 'The Name may not be greater than 15 characters.',
             'dados.supplier_id.exists' => 'Must insert a valid supplier',
-            'dados.price.digits_between' => 'Price must be a digit between 1 and 5',
+            'dados.price.numeric' => 'Price must be a numeric value, no commas',
+            'dados.price.min' => 'Price has a min value over 1 EUR',
             'dados.quantity.digits_between' => 'Quantity must be a digit between 1 and 5'
         ]);
 

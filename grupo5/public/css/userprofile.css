@@ -5,8 +5,7 @@
 }
 
 body {
-    padding: 1em;
-    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     font-size: 15px;
     color: #b9b9b9;
     background-color: #e3e3e3;
@@ -21,8 +20,6 @@ input {
     background-color: #f9f9f9;
     border: 1px solid #e5e5e5;
     border-radius: 3px;
-    transition: 0.35s ease-in-out;
-    transition: all 0.35s ease-in-out;
 }
 
 .payinfo {
@@ -42,44 +39,23 @@ input:focus + .input-icon:after {
 .input-group {
     margin-bottom: 1em;
     zoom: 1;
-}
-.input-group:before,
-.input-group:after {
-    content: "";
-    display: table;
-}
-.input-group:after {
-    clear: both;
-}
-.input-group-icon {
     position: relative;
 }
+
 .input-group-icon input {
-    padding-left: 4.4em;
+    padding-left: 70px;
 }
 .input-group-icon .input-icon {
     position: absolute;
     top: 0;
     left: 0;
-    width: 3.4em;
-    height: 3.4em;
-    line-height: 3.4em;
+    width: 54px;
+    height: 54px;
+    line-height: 54px;
     text-align: center;
     pointer-events: none;
 }
-.input-group-icon .input-icon:after {
-    position: absolute;
-    top: 0.6em;
-    bottom: 0.6em;
-    left: 3.4em;
-    display: block;
-    border-right: 1px solid #e5e5e5;
-    content: "";
-    transition: 0.35s ease-in-out;
-}
-.input-group-icon .input-icon i {
 
-}
 .container {
     max-width: 38em;
     padding: 1em 3em 2em 3em;

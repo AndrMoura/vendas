@@ -18,7 +18,7 @@ class UserProfileController extends Controller
         $orders = Order::where('user_id', $user->id)->paginate(10); //todas as orders
         $number_orders = count($orders);
         //$number_orders = Order::where('user_id', $user->id)->count();
-        $orders->appends(['page' => 'asd'])->links();
+        $orders->links();
         $products = Product::all();
 
         return view('userprofile.userprofile', compact('user', 'orders', 'products', 'number_orders'));

@@ -97,7 +97,6 @@ class PaymentController extends Controller
          $redirectUrls->setReturnUrl("http://laravel-paypal-example.test")
         ->setCancelUrl("http://laravel-paypal-example.test");
 
-        // Add NO SHIPPING OPTION
         $inputFields = new InputFields();
         $inputFields->setNoShipping(1);
         $webProfile = new WebProfile();
@@ -140,10 +139,6 @@ class PaymentController extends Controller
 
                 return $this->paymentOptions($cart, false);
             }
-        }
-        else {
-            redirect()->away('https://www.google.com');
-
         }
     }
 
@@ -188,7 +183,7 @@ class PaymentController extends Controller
         if($checkType != "false"){
             for($i = 0; $i < count($item_list); $i++){
 
-                $order->products()->attach($item_list[$i]->sku, ['quantity' => $item_list[$i]->quantity, 'unit_price' => $item_list[$i]->price]);
+                $order->products()->attach($item_list[$i]->sku, ['product_name'=> $item_list[$i]->name,'quantity' => $item_list[$i]->quantity, 'unit_price' => $item_list[$i]->price]);
                 $productRemoveQuantity = Product::where('id', $item_list[$i]->sku)->first();
                 $productRemoveQuantity->quantity -= $item_list[$i]->quantity;
                 $productRemoveQuantity->save();
@@ -198,7 +193,7 @@ class PaymentController extends Controller
         }
         else {
 
-            $order->products()->attach($item_list[0]->sku, ['quantity' => $item_list[0]->quantity, 'unit_price' => $item_list[0]->price]);
+            $order->products()->attach($item_list[0]->sku, ['product_name'=> $item_list[0]->name, 'quantity' => $item_list[0]->quantity, 'unit_price' => $item_list[0]->price]);
             $productRemoveQuantity = Product::where('id', $item_list[0]->sku)->first();
             $productRemoveQuantity->quantity -= 1;
             $productRemoveQuantity->save();

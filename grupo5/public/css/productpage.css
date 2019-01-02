@@ -12,6 +12,8 @@
     border-width: 1px 1px 3px;
     box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
     margin-bottom: 10px;
+    left: 80px;
+    position: relative;
   }
   .editsubmitprofile:hover{
     background: rgb(39, 105, 0);
@@ -45,4 +47,32 @@
   {
       overflow: hidden;
   }
-  
+
+  #paypal-button
+  {
+      width: auto;
+      float: right;
+      margin-right: 200px;
+      margin-top: 15px;
+      left: 80px;
+      position: relative;
+  }
+
+  .resize
+  {
+      width: 448px;
+      height: 448px;
+      max-width: 448px;
+      max-height: 448px;
+  }
+
+  #stock
+  {
+      color:green;
+      font-size: medium;
+  }
+
+  hr
+  {
+      margin-top: 20px;
+  }

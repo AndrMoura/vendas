@@ -11,12 +11,12 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
 Auth::routes();
-Route::get('/home', 'HomePageController@index');
+Route::get('/', 'HomePageController@index');
 Route::get('/home/search', 'HomePageController@search');
 
 //CART------------------------------------------------------------------------------------------------------------------\

@@ -2,6 +2,9 @@
 
 @section('content')
 
+ <head>
+     <title> Homepage</title>
+</head>
 
 <link href = "{{ asset('css/main.css') }}" rel ="stylesheet">
 <link href = "{{ asset('css/home.css') }}" rel ="stylesheet">
@@ -243,6 +246,20 @@ function searchProduct(name){
     <b><p>No products found in the database</p></b>
 
 @else
+    @if (session()->has('login'))
+        <div id="myModal" class="modal">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Success</h2>
+                </div>
+                <div class="modal-body">
+                    <p id="modaltext">{{session('login')}}</p>
+                </div>
+            </div>
+        </div>
+        <div class=" alert-success">{!! session('flash_notification.success') !!}</div>
+    @endif
 
 <div id="myModal" class="modal" style="display: none">
 

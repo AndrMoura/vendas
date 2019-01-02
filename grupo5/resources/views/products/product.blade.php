@@ -1,6 +1,11 @@
 @extends('layouts.search')
 
 @section('content')
+
+<head>
+    <title> {{$product->name}}</title>
+</head>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <link href = "{{ asset('css/main.css') }}" rel ="stylesheet">
@@ -38,7 +43,6 @@
                     console.log(res);
                     $('.maxcontainer').remove();
                     $('#paypal-button').remove();
-                    var noItems = $("<p></p>").text("no items in cart.");
                     $("body").append(noItems);
                     $(".cartlabel").text(0);
                 })
@@ -105,23 +109,6 @@
 
 </script>
 
-<script>
-
-$(document).ready(function() {
-
-$('.resize').hover(
-    function(){
-        originalheight = $('.resize')[0].height;
-        originalwidth = $('.resize')[0].width;
-        $('.resize').animate({width: (originalwidth * 1.3), height: (originalheight * 1.3)}, 100);
-    },
-    function(){
-       $('.resize').animate({width: originalwidth , height: originalheight}, 100);
-    }
-);
-})
-
-</script>
 
 <div id="fb-root"></div>
 
@@ -159,26 +146,36 @@ $('.resize').hover(
     <div class = "infocontainer">
         <h1> {{$product->name}} </h1>
         <p>Type : {{$product->type}}</p>
-        <p>In stock : {{$product->quantity}}</p>
+        @if($product->quantity > 0)
+            <b> <p id = "stock">In stock </p></b>
+
+         @else
+            <b> <p id = "stock">Out of stock </p></b>
+        @endif
+
         <div class ="productprice">
             <p>Price : {{$product->price}} € </p>
         </div>
     </div>
 
+    <hr>
+    <br>
     <div>
         <form id='form' action='/cart' method='POST'>
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="id" value="{{$product->id}}">
         </form>
         @if  (Auth::check() && Auth::user()->role == 'user'|| !Auth::check())
+
             <button id='cart' value ='{{$product->id}}'class="editsubmitprofile">Add to Cart</button>
-            <button class="editsubmitprofile"> Buy Now </button>
-        @else
+            <div id="paypal-button"></div>
+
+             @else
             <button id='cart' value ='{{$product->id}}'class="editsubmitprofile" disabled style="background-color:#a1ada1; cursor:not-allowed;">Add to Cart</button>
             <button class="editsubmitprofile" disabled style="background-color:#a1ada1; cursor:not-allowed;"> Buy Now </button>
 
         @endif
-        <div id="paypal-button"></div>
+
     </div>
   
     <br>

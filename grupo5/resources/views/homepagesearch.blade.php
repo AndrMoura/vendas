@@ -1,6 +1,9 @@
 @extends('layouts.search')
 
 @section('content')
+<head>
+    <title> Homepage</title>
+</head>
 
 <link href = "{{ asset('css/main.css') }}" rel ="stylesheet">
 <link href = "{{ asset('css/home.css') }}" rel ="stylesheet">

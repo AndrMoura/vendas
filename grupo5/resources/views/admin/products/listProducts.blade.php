@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+<head>
+    <title> Manage products</title>
+</head>
 
 <style>
     td[contentEditable] {
@@ -86,7 +89,6 @@
                 var $row = $('<tr id="product_list" value=\"' +product.id+'\">>'+
                     '<td>'+product.id+'</td>'+
                     '<td id="name" >'+product.name+'</td>'+
-                    '<td id="supplier_id" >'+product.supplier_id+'</td>'+
                     '<td id="price">'+product.price+'</td>'+
                     '<td id="type">'+product.type+'</td>'+
                     '<td id="quantity">'+product.quantity+'</td>'+
@@ -160,7 +162,8 @@
             datatype: 'json',
             contentType: 'application/x-www-form-urlencoded',
             error: function (data) {
-
+                $("#alert").css('display', 'block');
+                $("#edit_error").html("An error has occurred");
 
             }
         })
@@ -200,6 +203,10 @@
             }
         }
         else {
+            if(td.attr('id') == 'id1')
+            {
+                return;
+            }
             td.attr('contenteditable','true');
             td.focus();
         }
@@ -223,7 +230,6 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Supplier</th>
             <th>Price</th>
             <th>Type</th>
             <th>Quantity</th>
@@ -244,7 +250,6 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Supplier</th>
         <th>Price (EUR)</th>
         <th>Type</th>
         <th>Quantity</th>
@@ -253,9 +258,8 @@
     @foreach($products as $product)
 
       <tr id="product_list" value="{{$product->id}}">
-        <td >{{$product->id}} </td>
+        <td id ="id1">{{$product->id}} </td>
         <td id="name" >{{$product->name}}</td>
-        <td id="supplier_id">{{$product->supplier_id}}</td>
         <td id="price">{{$product->price}}</td>
         <td id="type">{{$product->type}}</td>
         <td id="quantity">{{$product->quantity}}</td>

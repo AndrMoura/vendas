@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+<head>
+      <title> User details</title>
+</head>
+
 <link href = "{{ asset('css/main.css') }}" rel ="stylesheet">
 <link href = "{{ asset('css/profile.css') }}" rel ="stylesheet">
 

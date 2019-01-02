@@ -1,6 +1,9 @@
 @extends('layouts.search')
 
 @section('content')
+<head>
+    <title> User cart</title>
+</head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link href = "{{ asset('css/cart.css') }}" rel ="stylesheet">
 <link href = "{{ asset('css/main.css') }}" rel ="stylesheet">
@@ -163,7 +166,7 @@
       <tr>
           <th>Image</th>
           <th>Product</th>
-          <th>Price</th>
+          <th>Price (EUR)</th>
           <th>Quantity</th>
           <th>Total</th>
           <th>Remove</th>
@@ -201,17 +204,15 @@
 
 <div class="maxcontainer">
     <div class ="lowercartpage">
-        <div class="total">
+        <div class="total" style="text-align: center; padding: 20px;">
           <strong>Total price</strong>
-          <div class="totals-value" id="cart-total">{{$total}}</div>
-        </div>
-            <button class="paypal-button">Procede to buy</button>
+          <div class="totals-value" style="display: inline;" id="cart-total">{{$total}}</div> €
+            </div>
         </div>
 </div>
-
+    <div id="paypal-button" style="position: relative;left: 1307px;"></div>
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 
-<div id="paypal-button"></div>
 
 <script>
     paypal.Button.render({

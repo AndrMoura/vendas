@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-
+<head>
+    <title> Password retrieve</title>
+</head>
 @section('content')
 
 <link href = "{{ asset('css/register.css') }}" rel ="stylesheet">

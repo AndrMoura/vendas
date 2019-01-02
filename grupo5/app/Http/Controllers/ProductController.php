@@ -30,7 +30,16 @@ class ProductController extends Controller
             $cart = Cart::where('user_id', $user->id)
                 ->where('product_id',$request->id)->first();
 
-            $checkQuantity = $cart->quantity + 1;
+            if($cart == null)
+            {
+                $checkQuantity = 1;
+            }
+            else
+            {
+                $checkQuantity = $cart->quantity + 1;
+            }
+
+
 
             if($insertProduct->quantity < $checkQuantity){
                 return redirect()->back()->withSuccess('Not enough Products in stock');
@@ -166,9 +175,16 @@ class ProductController extends Controller
             $cart = Cart::where('user_id', $user->id)
                 ->where('product_id', $request->id)->first();
 
-            $product = Product::where('id',$cart->product_id)->first();
+            $product = Product::where('id',$request->id)->first();
+            if($cart == null)
+            {
+                $checkQuantity = 1;
+            }
+            else
+            {
+                $checkQuantity = $cart->quantity + 1;
+            }
 
-            $checkQuantity = $cart->quantity + 1;
 
             if($product->quantity < $checkQuantity){
                 return response()->json(['error'=>"Not enough products"], 500);

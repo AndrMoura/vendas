@@ -10,6 +10,7 @@
 <link href = "{{ asset('css/table.css') }}" rel ="stylesheet">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title> User details</title>
 </head>
 
 <style>
@@ -136,23 +137,23 @@
                     <div class="input-icon"><i class="fa fa-user"></i></div>
                 </div>
                 <div class="input-group input-group-icon">
-                    <input type="text" id="email"  value="{{Auth::user()->email}}">
+                    <input type="text" id="email" placeholder="example@example.pt" value="{{Auth::user()->email}}">
                     <div class="input-icon"><i class="fas fa-at"></i></div>
                 </div>
                 <div class="input-group input-group-icon">
-                    <input type="text" id="address" value="{{Auth::user()->address}}">
+                    <input type="text" id="address" placeholder="Address name" value="{{Auth::user()->address}}">
                     <div class="input-icon"><i class="fas fa-home"></i></div>
                 </div>
                 <div class="input-group input-group-icon">
-                    <input type="text" id="city"  value="{{Auth::user()->city}}">
+                    <input type="text" id="city" placeholder="City name" value="{{Auth::user()->city}}">
                     <div class="input-icon"><i class="fas fa-city"></i></div>
                 </div>
                 <div class="input-group input-group-icon">
-                    <input type="text" id="codigopostal"  value="{{Auth::user()->codigopostal}}">
+                    <input type="text" id="codigopostal" placeholder="Postal Code eg. 9000-112" value="{{Auth::user()->codigopostal}}">
                     <div class="input-icon"><i class="fa fa-envelope"></i></div>
                 </div>
                 <div class="input-group input-group-icon">
-                    <input type="text" id="phone" value="{{Auth::user()->phone}}">
+                    <input type="text" id="phone" placeholder="Phone number min 9 digits" value="{{Auth::user()->phone}}">
                     <div class="input-icon"><i class="fas fa-phone"></i></div>
                 </div>
             </div>
@@ -219,9 +220,9 @@
                         <th> Quantity </th>
                         <th> Price (EUR) </th>
                         <th> Total </th>
-                        @foreach ($orders[$i]->products as $product)
+            @foreach ($orders[$i]->products as $product)
                 <tr>
-                    <td>{{$product->pivot->product_id}}</td>
+                    <td>{{$product->pivot->product_name}}</td>
                     <td>{{$product->pivot->quantity}}</td>
                     <td>{{$product->pivot->unit_price}}</td>
                     <td>{{$product->pivot->quantity*$product->pivot->unit_price}}</td>

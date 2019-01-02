@@ -41,9 +41,7 @@ class UserController extends Controller
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        $success['token'] =  $user->createToken('MyApp')-> accessToken;
-        $success['name'] =  $user->name;
-        return response()->json(['success'=>$success], $this-> successStatus);
+        return response()->json(['success'=>'User created'], $this-> successStatus);
     }
 
     public function details()
@@ -51,6 +49,31 @@ class UserController extends Controller
         $user = Auth::user();
 
         $products = Product::all();
-        return response()->json(['success' => $user->role], $this-> successStatus);
+        return response()->json(['success' => $user->name], $this-> successStatus);
+    }
+
+    public function update(Request $request){
+
+        $user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'nullable',
+            'username' => 'unique:users|nullable|min:5|max:255',
+            'email' => "nullable|email",
+            'address' => 'nullable|min:5|max:255',
+            'city' => 'nullable|min:5|max:255',
+            'codigopostal' => 'nullable|regex:/^\d{4}-\d{3}?$/',
+            'phone' => 'nullable|digits:9'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 401);
+        }
+
+        $user = User::find($user->id);
+        if($user == null) return response()->json(['error' => 'user not found'], 404);
+
+        $user->update($request->all());
+        return response()->json(['success'=>'User updated'], $this-> successStatus);
     }
 }
