@@ -49,7 +49,7 @@
 
         $.ajax({
             method: "POST",
-            url: "http://127.0.0.1:8000/profile/{{Auth::user()->id}}",
+            url: "{{url('/profile',[Auth::user()->id])}}",
             headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')},
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'),

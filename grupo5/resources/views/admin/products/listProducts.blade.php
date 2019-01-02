@@ -42,7 +42,7 @@
 
        $.ajax({
 
-           url: "http://127.0.0.1:8000/manage/products",
+           url: "{{url("manage/products")}}",
            data: new FormData($("#data")[0]),
            async: false,
            method: 'post',
@@ -87,7 +87,7 @@
                 }
 
                 var $row = $('<tr id="product_list" value=\"' +product.id+'\">>'+
-                    '<td>'+product.id+'</td>'+
+                    '<td id= "id1">'+product.id+'</td>'+
                     '<td id="name" >'+product.name+'</td>'+
                     '<td id="price">'+product.price+'</td>'+
                     '<td id="type">'+product.type+'</td>'+
@@ -112,7 +112,7 @@
         dataObject[colname] = dados;
         $.ajax({
             method: "POST",
-            url: "http://127.0.0.1:8000/manage/products/edit",
+            url: "{{url("manage/products/edit")}}",
             headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')},
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'),
@@ -153,7 +153,7 @@
 
         $.ajax({
             method: "POST",
-            url: "http://127.0.0.1:8000/manage/products/delete",
+            url: "{{url("manage/products/delete")}}",
             headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')},
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'),

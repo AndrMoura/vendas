@@ -68,10 +68,9 @@
 
     function addProductCard(id){
 
-        console.log('HOMEPAGESEARCH');
         $.ajax({
             method: "POST",
-            url: "http://127.0.0.1:8000/home",
+            url: "{{url("home")}}",
             headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')},
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'),
@@ -107,7 +106,7 @@
 
         $.ajax({
             method: "GET",
-            url: "http://127.0.0.1:8000/home/search",
+            url: "{{url("home/search")}}",
             headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')},
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'),

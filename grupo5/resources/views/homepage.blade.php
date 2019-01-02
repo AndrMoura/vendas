@@ -82,7 +82,7 @@ function addProductCard(id){
 
     $.ajax({
         method: "POST",
-        url: "http://127.0.0.1:8000/home",
+        url:"{{url("home")}}",
         headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')},
         data: {
             _token: $('meta[name="csrf-token"]').attr('content'),
@@ -123,7 +123,7 @@ function searchProduct(name){
 
         $.ajax({
             method: "GET",
-            url: "http://127.0.0.1:8000/home/search",
+            url: "{{url("home/search")}}",
             headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')},
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'),
@@ -240,26 +240,27 @@ function searchProduct(name){
     });
 
 </script>
+ @if (session()->has('login'))
+     <div id="myModal" class="modal">
 
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h2>Success</h2>
+             </div>
+             <div class="modal-body">
+                 <p id="modaltext">{{session('login')}}</p>
+             </div>
+         </div>
+     </div>
+     <div class=" alert-success">{!! session('flash_notification.success') !!}</div>
+ @endif
 
 @if($count == 0)
     <b><p>No products found in the database</p></b>
 
-@else
-    @if (session()->has('login'))
-        <div id="myModal" class="modal">
 
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Success</h2>
-                </div>
-                <div class="modal-body">
-                    <p id="modaltext">{{session('login')}}</p>
-                </div>
-            </div>
-        </div>
-        <div class=" alert-success">{!! session('flash_notification.success') !!}</div>
-    @endif
+@else
+
 
 <div id="myModal" class="modal" style="display: none">
 

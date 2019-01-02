@@ -16,7 +16,7 @@
 
         $.ajax({
             method: "POST",
-            url: "http://127.0.0.1:8000/updateCart",
+            url: "{{url("updateCart")}}",
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'),
                 id: id,
@@ -66,7 +66,7 @@
 
         $.ajax({
             method: "POST",
-            url: "http://127.0.0.1:8000/cart/delete/",
+            url: "{{url("cart/delete")}}",
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'),
                 id: id
