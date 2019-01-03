@@ -48,8 +48,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        $products = Product::all();
-        return response()->json(['success' => $user->name], $this-> successStatus);
+        return response()->json(['success' => $user], $this-> successStatus);
     }
 
     public function update(Request $request){
@@ -58,7 +57,7 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'nullable',
-            'username' => 'unique:users|nullable|min:5|max:255',
+            'username' => 'unique:users|min:5|max:255',
             'email' => "nullable|email",
             'address' => 'nullable|min:5|max:255',
             'city' => 'nullable|min:5|max:255',

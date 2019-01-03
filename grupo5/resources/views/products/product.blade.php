@@ -46,6 +46,9 @@
                     $("body").append(noItems);
                     $(".cartlabel").text(0);
                 })
+        },
+        onError: function (err) {
+            console.log(err);
         }
     }, '#paypal-button');
 

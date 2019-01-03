@@ -20,19 +20,18 @@ Route::get('/', 'HomePageController@index');
 Route::get('/home/search', 'HomePageController@search');
 
 //CART------------------------------------------------------------------------------------------------------------------\
-Route::post('/cart', 'ProductController@saveCart');
-Route::post('/updateCart','ProductController@updateCart');
-Route::post('/home', 'ProductController@saveCartHomePage');
-Route::post('/cart/delete', 'ProductController@deleteCart');
 
-Route::get('/cart', 'ProductController@showCart')->name('cart');
 //------------------------------------------------------------------------------------------------------------------------
 
 Route::get('/product/{id}', 'ProductController@index')->name('produtos');
 
-Route::group(['middleware' => 'auth'], function () 
+Route::group(['middleware' => 'user'], function ()
 {
-
+    Route::get('/cart', 'ProductController@showCart')->name('cart');
+    Route::post('/cart', 'ProductController@saveCart');
+    Route::post('/updateCart','ProductController@updateCart');
+    Route::post('/home', 'ProductController@saveCartHomePage');
+    Route::post('/cart/delete', 'ProductController@deleteCart');
     Route::get('/profile/{id}', 'UserProfileController@index');
     Route::post('/profile/{id}', 'UserProfileController@postEdit');
     Route::get('/profile/{id}/paymentDetails','PaymentController@getSalesId');

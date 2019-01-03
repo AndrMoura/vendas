@@ -26,9 +26,9 @@ Route::post('register', 'API\UserController@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
 
-    Route::get('details', 'API\UserController@details'); //detalhes user
+    Route::get('user', 'API\UserController@details'); //detalhes user
     Route::put('user', 'API\UserController@update');
-    Route::post('product', 'API\ProductController@createProduct');
+    Route::post('products', 'API\ProductController@createProduct');
 
 });
 

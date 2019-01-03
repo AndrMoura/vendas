@@ -113,7 +113,7 @@ class PaymentController extends Controller
         try {
             $payment->create($apiContext);
         } catch (Exception $ex) {
-            echo $ex;
+            echo $ex->getCode(); // Prints the Error Code
             exit(1);
         }
 
@@ -129,7 +129,7 @@ class PaymentController extends Controller
                $producttoBuy = Product::find($request->id);
 
                 if ($producttoBuy->quantity <= 0) {
-                    return response()->json(['error' => 'No products avaiable']);
+                    return response()->json(['error' => 'No products avaiable'], 401);
                 } else {
                     return $this->paymentOptions($producttoBuy, true);
                 }
