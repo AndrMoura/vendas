@@ -20,7 +20,11 @@ Route::get('/', 'HomePageController@index');
 Route::get('/home/search', 'HomePageController@search');
 
 //CART------------------------------------------------------------------------------------------------------------------\
-
+Route::get('/cart', 'ProductController@showCart')->name('cart');
+Route::post('/cart', 'ProductController@saveCart');
+Route::post('/updateCart','ProductController@updateCart');
+Route::post('/home', 'ProductController@saveCartHomePage');
+Route::post('/cart/delete', 'ProductController@deleteCart');
 //------------------------------------------------------------------------------------------------------------------------
 
 Route::get('/product/{id}', 'ProductController@index')->name('produtos');
